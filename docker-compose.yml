@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_password
+      POSTGRES_DB: todo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://todo_user:todo_password@db:5432/todo_db?schema=public
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "npx prisma migrate deploy && node server.js"
+
+volumes:
+  pgdata:
