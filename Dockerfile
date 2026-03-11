@@ -42,6 +42,7 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/prisma ./prisma
 
 # Prisma needs to run migrations or we run them separately. In this image, we just bundle prisma engine 
 # Optionally you could run migrations via a script on startup, but standard best practice is migrating in CI/CD.

@@ -21,7 +21,7 @@ services:
     ports:
       - "3000:3000"
     command: >
-      sh -c "npx prisma migrate deploy && node server.js"
+      sh -c "npx prisma@6 migrate deploy && node server.js"
 
 volumes:
   pgdata:
